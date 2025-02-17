@@ -4,6 +4,8 @@ import storage from 'redux-persist/lib/storage';
 
 import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist/es/constants';
 import { registerAPI } from "../features/auth/register/registerAPI";
+// import { loginAPI } from "../features/auth/login/loginAPI";
+
 
 
 const persistConfig = {
@@ -14,6 +16,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     [registerAPI.reducerPath]: registerAPI.reducer,
+    // [loginAPI.reducerPath]: loginAPI.reducer,
+
        // Add other reducers here
     
     // Add other reducers here
