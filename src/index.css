@@ -1,37 +1,39 @@
 @import "tailwindcss";
 
+/* @import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities"; */
 
 /* Global styles for dark mode */
 [data-theme="dark"] {
   background-color: #1a202c;
-  color: white;
+  color: #ffffff;
 }
 
-/* Customize dark mode for specific elements */
 [data-theme="dark"] .bg-gray-100 {
-  background-color: #2d3748; /* Dark gray */
+  background-color: #2d3748;
 }
 
 [data-theme="dark"] .bg-blue-600 {
-  background-color: #2b4a78; /* Dark blue */
+  background-color: #2b6cb0;
 }
 
 [data-theme="dark"] .bg-yellow-500 {
-  background-color: #f6e05e; /* Light yellow for dark mode */
+  background-color: #f6e05e;
 }
 
 [data-theme="dark"] .text-gray-700 {
-  color: #edf2f7; /* Light gray text for better contrast */
+  color: #e2e8f0;
 }
 
 [data-theme="dark"] .text-gray-600 {
-  color: #e2e8f0; /* Lighter gray text */
+  color: #cbd5e0;
 }
 
 [data-theme="dark"] .text-gray-500 {
-  color: #cbd5e0; /* Even lighter gray */
+  color: #a0aec0;
 }
 
 [data-theme="dark"] .text-gray-200 {
-  color: #edf2f7; /* Very light text for subtle elements */
+  color: #edf2f7;
 }
