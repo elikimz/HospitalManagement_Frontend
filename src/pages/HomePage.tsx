@@ -1,6 +1,6 @@
-
-import Navbar from '../components/Navbar '; // Assuming the Navbar component is in the same folder
-import Footer from '../components/footer';// Importing the Footer component
+import Navbar from '../components/Navbar ';
+import Footer from '../components/footer';
+import About from './about';
 
 const Home = () => {
   return (
@@ -8,8 +8,16 @@ const Home = () => {
       {/* Navbar */}
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="bg-blue-600 text-white py-20">
+      {/* Hero Section with Background Banner */}
+      <section
+        id="home"
+        className="bg-blue-600 text-white py-20"
+        style={{
+          backgroundImage: "url('https://images.pexels.com/photos/3259624/pexels-photo-3259624.jpeg?auto=compress&cs=tinysrgb&w=600')", 
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-bold leading-tight">
             Welcome to the Hospital Management System
@@ -23,41 +31,39 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Key Features */}
-      <section className="py-16 bg-gray-100">
+      {/* Key Features Section */}
+      <section id="features" className="py-16 bg-gray-100">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-gray-700">Key Features</h2>
-          <p className="mt-4 text-lg text-gray-500">
+          <h2 className="text-3xl font-bold text-gray-700 dark:text-gray-200">Key Features</h2>
+          <p className="mt-4 text-lg text-gray-500 dark:text-gray-400">
             Our system offers various features to improve hospital management and patient care.
           </p>
-
-          {/* Feature Cards */}
           <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {/* Feature 1 */}
-            <div className="bg-white shadow-lg rounded-lg p-6">
-              <h3 className="text-xl font-semibold text-gray-700">Patient Management</h3>
-              <p className="mt-4 text-gray-600">
+            <div className="bg-white shadow-lg rounded-lg p-6 dark:bg-gray-800">
+              <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-200">Patient Management</h3>
+              <p className="mt-4 text-gray-600 dark:text-gray-400">
                 Keep track of patient records, appointments, and medical history easily.
               </p>
             </div>
-
-            {/* Feature 2 */}
-            <div className="bg-white shadow-lg rounded-lg p-6">
-              <h3 className="text-xl font-semibold text-gray-700">Appointment Booking</h3>
-              <p className="mt-4 text-gray-600">
+            <div className="bg-white shadow-lg rounded-lg p-6 dark:bg-gray-800">
+              <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-200">Appointment Booking</h3>
+              <p className="mt-4 text-gray-600 dark:text-gray-400">
                 Book, cancel, and manage appointments with doctors seamlessly.
               </p>
             </div>
-
-            {/* Feature 3 */}
-            <div className="bg-white shadow-lg rounded-lg p-6">
-              <h3 className="text-xl font-semibold text-gray-700">Pharmacy Management</h3>
-              <p className="mt-4 text-gray-600">
+            <div className="bg-white shadow-lg rounded-lg p-6 dark:bg-gray-800">
+              <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-200">Pharmacy Management</h3>
+              <p className="mt-4 text-gray-600 dark:text-gray-400">
                 Manage prescriptions and stock levels efficiently.
               </p>
             </div>
           </div>
         </div>
+      </section>
+
+      {/* About Section */}
+      <section id="about">
+        <About /> {/* Inserting the About component here */}
       </section>
 
       {/* Call to Action */}
