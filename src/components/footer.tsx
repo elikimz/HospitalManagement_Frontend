@@ -22,11 +22,11 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="text-xl font-semibold text-yellow-400">Quick Links</h3>
             <div className="flex flex-col items-center md:items-start space-y-2">
-              <a href="#home" className="text-gray-300 hover:text-yellow-500">Home</a>
-              <a href="#services" className="text-gray-300 hover:text-yellow-500">Our Services</a>
-              <a href="#about" className="text-gray-300 hover:text-yellow-500">About</a>
-              <a href="#contact" className="text-gray-300 hover:text-yellow-500">Contact</a>
-              <a href="#faq" className="text-gray-300 hover:text-yellow-500">FAQ</a>
+              <a href="/" className="text-gray-300 hover:text-yellow-500">Home</a>
+              <a href="services" className="text-gray-300 hover:text-yellow-500">Our Services</a>
+              <a href="about" className="text-gray-300 hover:text-yellow-500">About</a>
+              <a href="contact" className="text-gray-300 hover:text-yellow-500">Contact</a>
+              <a href="faq" className="text-gray-300 hover:text-yellow-500">FAQ</a>
             </div>
           </div>
 
@@ -60,7 +60,6 @@ const Footer = () => {
       {/* Copyright and Credit Section */}
       <div className="mt-12 text-center text-gray-400">
         <p>&copy; 2025 MediCare Hospital. All rights reserved.</p>
-        <p className="mt-2">Powered by <a href="https://kimtech.site" className="text-yellow-400 hover:underline">KimTech.site</a></p>
       </div>
     </footer>
   );

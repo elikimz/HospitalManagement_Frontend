@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom"; // Ensure you're using React Router
 
 const Navbar = () => {
   const [isDarkMode, setDarkMode] = useState(false);
@@ -9,9 +10,9 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
+    const savedTheme = localStorage.getItem("theme");
     if (savedTheme) {
-      setDarkMode(savedTheme === 'dark');
+      setDarkMode(savedTheme === "dark");
     } else {
       setDarkMode(false); // Default theme is light mode
     }
@@ -19,11 +20,11 @@ const Navbar = () => {
 
   useEffect(() => {
     if (isDarkMode) {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      localStorage.setItem('theme', 'dark');
+      document.documentElement.setAttribute("data-theme", "dark");
+      localStorage.setItem("theme", "dark");
     } else {
-      document.documentElement.removeAttribute('data-theme');
-      localStorage.setItem('theme', 'light');
+      document.documentElement.removeAttribute("data-theme");
+      localStorage.setItem("theme", "light");
     }
   }, [isDarkMode]);
 
@@ -36,16 +37,40 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         {/* Logo Section */}
         <div className="text-xl font-bold text-blue-500 dark:text-blue-300">
-          <a href="/">MediCare Hospital</a>
+          <Link to="/">MediCare Hospital</Link>
         </div>
 
         {/* Navbar Links */}
         <div className="hidden md:flex space-x-6">
-          <a href="#home" className="text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300">Home</a>
-          <a href="#features" className="text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300">Features</a>
-          <a href="#about" className="text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300">About</a>
-          <a href="#contact" className="text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300">Contact</a>
-          <a href="#faq" className="text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300">FAQ</a>
+          <Link to="/" className="text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300">
+            Home
+          </Link>
+          <Link to="/features" className="text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300">
+            Features
+          </Link>
+          <Link to="/about" className="text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300">
+            About
+          </Link>
+          <Link to="/contact" className="text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300">
+            Contact
+          </Link>
+          <Link to="/faq" className="text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300">
+            FAQ
+          </Link>
+        </div>
+
+        {/* Sign Up & Login Buttons */}
+        <div className="hidden md:flex space-x-4">
+          <Link to="/login">
+            <button className="px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition">
+              Login
+            </button>
+          </Link>
+          <Link to="/register">
+            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+              Sign Up
+            </button>
+          </Link>
         </div>
 
         {/* Toggle Button for Dark/Light Mode */}
@@ -60,7 +85,10 @@ const Navbar = () => {
             />
             <span className="w-12 h-6 bg-gray-300 dark:bg-gray-700 rounded-full relative inline-block transition-all duration-300">
               <span
-                className={`w-6 h-6 bg-white rounded-full absolute top-0 left-0 transition-all duration-300 ${isDarkMode ? "transform translate-x-full" : ""}`}></span>
+                className={`w-6 h-6 bg-white rounded-full absolute top-0 left-0 transition-all duration-300 ${
+                  isDarkMode ? "transform translate-x-full" : ""
+                }`}
+              ></span>
             </span>
             <span className="text-gray-700 dark:text-gray-200">☀️</span>
           </label>
@@ -77,12 +105,35 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu */}
-      <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'} bg-gray-100 dark:bg-gray-800 p-4`}>
-        <a href="#home" className="block text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300 py-2">Home</a>
-        <a href="#features" className="block text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300 py-2">Features</a>
-        <a href="#about" className="block text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300 py-2">About</a>
-        <a href="#contact" className="block text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300 py-2">Contact</a>
-        <a href="#faq" className="block text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300 py-2">FAQ</a>
+      <div className={`md:hidden ${isMenuOpen ? "block" : "hidden"} bg-gray-100 dark:bg-gray-800 p-4`}>
+        <Link to="/" className="block text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300 py-2">
+          Home
+        </Link>
+        <Link to="/features" className="block text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300 py-2">
+          Features
+        </Link>
+        <Link to="/about" className="block text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300 py-2">
+          About
+        </Link>
+        <Link to="/contact" className="block text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300 py-2">
+          Contact
+        </Link>
+        <Link to="/faq" className="block text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300 py-2">
+          FAQ
+        </Link>
+        {/* Mobile Sign Up & Login Buttons */}
+        <div className="mt-4 space-y-2">
+          <Link to="/login">
+            <button className="w-full px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition">
+              Login
+            </button>
+          </Link>
+          <Link to="/register">
+            <button className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+              Sign Up
+            </button>
+          </Link>
+        </div>
       </div>
     </nav>
   );

@@ -4,7 +4,7 @@ import storage from 'redux-persist/lib/storage';
 
 import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist/es/constants';
 import { registerAPI } from "../features/auth/register/registerAPI";
-// import { loginAPI } from "../features/auth/login/loginAPI";
+import { loginAPI } from "../features/auth/login/loginAPI";
 
 
 
@@ -16,7 +16,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     [registerAPI.reducerPath]: registerAPI.reducer,
-    // [loginAPI.reducerPath]: loginAPI.reducer,
+    [loginAPI.reducerPath]: loginAPI.reducer,
 
        // Add other reducers here
     
@@ -32,7 +32,7 @@ export const store = configureStore({
             serializableCheck: {
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
-        }).concat(registerAPI.middleware),
+        }).concat(registerAPI.middleware,loginAPI.middleware),
 });
 
 export const persistor = persistStore(store);

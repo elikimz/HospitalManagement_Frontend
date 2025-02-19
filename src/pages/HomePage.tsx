@@ -1,85 +1,128 @@
-import Navbar from '../components/Navbar ';
-import Footer from '../components/footer';
-import About from './about';
-import Contact from './contact';
+import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar ";
+import Footer from "../components/footer";
 
 const Home = () => {
+  const navigate = useNavigate();
+
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <Navbar />
 
       {/* Hero Section */}
-      <section
-        id="home"
-        className="bg-blue-600 text-white py-20"
-        style={{
-          backgroundImage: "url('https://media.gettyimages.com/id/1210270631/photo/emergency-medical-technician-eunice-wangui-talks-on-the-phone-on-her-way-to-kenyatta-national.jpg?s=612x612&w=0&k=20&c=1UATexnBjcIiDVtdazJUmj7YabYmvncnjq6nLX5C6kw=')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold leading-tight">
+      <section className="flex flex-col items-center justify-center w-full min-h-screen bg-gray-100 px-6 sm:px-8 md:px-12 text-center">
+        <div className="max-w-3xl">
+          <h1 className="text-3xl  sm:text-4xl md:text-5xl font-bold text-gray-800 leading-tight">
             Welcome to MediCare Hospital Management System
           </h1>
-          <p className="mt-4 text-lg md:text-xl">
+          <p className="mt-4 text-base sm:text-lg md:text-xl text-gray-700">
             Manage patients, appointments, billing, pharmacy, and more with ease.
           </p>
-          <button className="mt-6 px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-black font-bold rounded-lg">
+          <button
+            onClick={() => navigate("/register")}
+            className="mt-6 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg"
+          >
             Get Started
           </button>
         </div>
-      </section>
 
-      {/* Key Features Section */}
-      <section id="features" className="py-16 bg-gray-100 dark:bg-gray-800">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-gray-700 dark:text-gray-200">Key Features</h2>
-          <p className="mt-4 text-lg text-gray-500 dark:text-gray-400">
-            Our system offers various features to improve hospital management and patient care.
-          </p>
-          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            <div className="bg-white dark:bg-gray-700 shadow-lg rounded-lg p-6">
-              <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-200">Patient Management</h3>
-              <p className="mt-4 text-gray-600 dark:text-gray-400">
-                Keep track of patient records, appointments, and medical history easily.
-              </p>
+        {/* Hero Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
+          {/* Card 1 */}
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <img 
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdkeIn3fxCQk6OP1ZuW9ZVyB9G1syLA12Bkw&s" 
+              alt="Appointments" 
+              className="w-full h-52 object-cover"
+            />
+            <div className="p-6 text-center">
+              <h3 className="text-xl font-bold text-gray-800">Easy Appointments</h3>
+              <p className="text-gray-600 mt-2">Schedule and manage doctor appointments with ease.</p>
             </div>
-            <div className="bg-white dark:bg-gray-700 shadow-lg rounded-lg p-6">
-              <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-200">Appointment Booking</h3>
-              <p className="mt-4 text-gray-600 dark:text-gray-400">
-                Book, cancel, and manage appointments with doctors seamlessly.
-              </p>
+          </div>
+
+          {/* Card 2 */}
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <img 
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSky30IeTbM7uaTFPADswQUiPKc8IsRDOUGjQ&s" 
+              alt="Billing" 
+              className="w-full h-52 object-cover"
+            />
+            <div className="p-6 text-center">
+              <h3 className="text-xl font-bold text-gray-800">Secure Billing</h3>
+              <p className="text-gray-600 mt-2">Handle billing and payments securely and efficiently.</p>
             </div>
-            <div className="bg-white dark:bg-gray-700 shadow-lg rounded-lg p-6">
-              <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-200">Pharmacy Management</h3>
-              <p className="mt-4 text-gray-600 dark:text-gray-400">
-                Manage prescriptions and stock levels efficiently.
-              </p>
+          </div>
+
+          {/* Card 3 */}
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <img 
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW82of9ZNMwIu7RW6H1R84Y9weFSsCPSJ53w&s" 
+              alt="Pharmacy" 
+              className="w-full h-52 object-cover"
+            />
+            <div className="p-6 text-center">
+              <h3 className="text-xl font-bold text-gray-800">Pharmacy Services</h3>
+              <p className="text-gray-600 mt-2">Get easy access to prescribed medications.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about">
-        <About />
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact">
-        <Contact />
-      </section>
-
-      {/* Call to Action */}
-      <section className="bg-blue-600 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-semibold">
-            Ready to get started with MediCare Hospital ?
+      {/* Hospital Services Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-6xl mx-auto px-6 sm:px-8 md:px-12">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-10">
+            Our Hospital Services
           </h2>
-          <button className="mt-6 px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-black font-bold rounded-lg">
-            Contact Us
-          </button>
+
+          {/* Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Appointments */}
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1Le5K6q31ed-pOlB8bMSJZGK5Sk0vHJFGNA&s"
+                alt="Appointments"
+                className="w-full h-52 object-cover"
+              />
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-gray-800">Appointments</h3>
+                <p className="text-gray-600 mt-2">
+                  Easily schedule and manage doctor appointments online.
+                </p>
+              </div>
+            </div>
+
+            {/* Pharmacy */}
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+              <img
+                src="https://via.placeholder.com/400"
+                alt="Pharmacy"
+                className="w-full h-52 object-cover"
+              />
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-gray-800">Pharmacy</h3>
+                <p className="text-gray-600 mt-2">
+                  Get access to prescription medicines and pharmacy services.
+                </p>
+              </div>
+            </div>
+
+            {/* Emergency Services */}
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+              <img
+                src="https://via.placeholder.com/400"
+                alt="Emergency"
+                className="w-full h-52 object-cover"
+              />
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-gray-800">Emergency Services</h3>
+                <p className="text-gray-600 mt-2">
+                  24/7 emergency care with specialized medical attention.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

@@ -1,8 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// src/pages/RegisterPage.tsx
-
-import React, { useState } from 'react';
-import { useRegisterUserMutation } from '../register/registerAPI'; // Adjust the import path as needed
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+import Navbar from "../../../components/Navbar ";
+import Footer from "../../../components/footer";
+import { useRegisterUserMutation } from "../register/registerAPI"; // Adjust the import path
+import Spinner from "../../../components/spinner";
 
 interface FormData {
   username: string;
@@ -14,148 +15,123 @@ interface FormData {
 }
 
 const RegisterPage: React.FC = () => {
+  const navigate = useNavigate(); // Initialize useNavigate
   const [formData, setFormData] = useState<FormData>({
-    username: '',
-    email: '',
-    password: '',
-    dob: '',
-    contact: '',
-    full_name: '',
+    username: "",
+    email: "",
+    password: "",
+    dob: "",
+    contact: "",
+    full_name: "",
   });
 
   const [registerUser, { data, isLoading, error }] = useRegisterUserMutation();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await registerUser(formData).unwrap();
-      // Optionally, redirect the user or clear the form on success
+      setFormData({
+        username: "",
+        email: "",
+        password: "",
+        dob: "",
+        contact: "",
+        full_name: "",
+      });
+      navigate("/login"); // Navigate to login page after successful registration
     } catch (err) {
-      console.error('Registration error:', err);
+      console.error("Registration error:", err);
     }
   };
 
-  // Determine the error message to display based on error detail.
   const getErrorMessage = () => {
     if (error) {
       const errorDetail = (error as any)?.data?.detail;
-      // Check for a database integrity error and convert it to a user-friendly message.
-      if (errorDetail && errorDetail.includes("database integrity error")) {
-        return "This email is already registered. Please log in.";
+      if (errorDetail?.includes("database integrity error")) {
+        return "This account is already registered. Please log in.";
       }
-      // Check for a specific error message for already registered email.
       if (errorDetail === "Email already registered") {
-        return "This email is already registered. Please log in.";
+        return "This account is already registered. Please log in.";
       }
-      return `Registration failed: ${errorDetail || 'Unknown error'}`;
+      return `Registration failed: ${errorDetail || "Unknown error"}`;
     }
     return null;
   };
 
-  // Get today's date in YYYY-MM-DD format for the max attribute
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split("T")[0];
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 p-8">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
-        <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">
-          Register
-        </h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-gray-700">Username</label>
-            <input
-              type="text"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-gray-700">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-gray-700">Password</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-gray-700">Date of Birth</label>
-            <input
-              type="date"
-              name="dob"
-              value={formData.dob}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1"
-              required
-              max={today} // Prevents selecting a future date
-            />
-          </div>
-          <div>
-            <label className="block text-gray-700">Contact</label>
-            <input
-              type="text"
-              name="contact"
-              value={formData.contact}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-gray-700">Full Name</label>
-            <input
-              type="text"
-              name="full_name"
-              value={formData.full_name}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1"
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300"
-          >
-            {isLoading ? "Registering..." : "Register"}
-          </button>
-        </form>
-        {error && (
-          <p className="mt-4 text-center text-red-500">
-            {getErrorMessage()}
+    <>
+      <Navbar />
+      <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
+        <div className="w-full max-w-md bg-white dark:bg-gray-800 shadow-lg rounded-xl p-6 sm:p-8">
+          <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-gray-200">
+            Create an Account
+          </h2>
+          <p className="text-gray-500 dark:text-gray-400 text-center text-sm mt-1">
+            Join MediCare Hospital Management System today
           </p>
-        )}
-        {data && (
-          <p className="mt-4 text-center text-green-500">
-            Registration successful!
+
+          <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+            {[
+              { label: "Username", type: "text", name: "username" },
+              { label: "Email", type: "email", name: "email" },
+              { label: "Password", type: "password", name: "password" },
+              { label: "Date of Birth", type: "date", name: "dob", max: today },
+              { label: "Contact", type: "text", name: "contact" },
+              { label: "Full Name", type: "text", name: "full_name" },
+            ].map(({ label, type, name, max }) => (
+              <div key={name}>
+                <label className="block text-sm text-gray-700 dark:text-gray-300">
+                  {label}
+                </label>
+                <input
+                  type={type}
+                  name={name}
+                  value={formData[name as keyof FormData]}
+                  onChange={handleChange}
+                  max={max}
+                  className="w-full px-3 py-2 border rounded-lg bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+            ))}
+
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full px-4 py-2 text-white font-semibold bg-blue-600 hover:bg-blue-700 rounded-lg transition duration-300 disabled:bg-blue-400 flex items-center justify-center"
+            >
+              {isLoading ? <Spinner /> : "Sign Up"}
+            </button>
+          </form>
+
+          {error && (
+            <p className="mt-4 text-center text-red-500 text-sm">
+              {getErrorMessage()}
+            </p>
+          )}
+          {data && (
+            <p className="mt-4 text-center text-green-500 text-sm">
+              Registration successful! Redirecting...
+            </p>
+          )}
+
+          <p className="mt-4 text-sm text-center text-gray-600 dark:text-gray-400">
+            Already have an account?{" "}
+            <a href="/login" className="text-blue-600 hover:underline">
+              Sign in
+            </a>
           </p>
-        )}
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 
