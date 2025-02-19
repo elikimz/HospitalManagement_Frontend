@@ -20,7 +20,7 @@ const Home = () => {
       >
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-            Welcome to the Hospital Management System
+            Welcome to MediCare Hospital Management System
           </h1>
           <p className="mt-4 text-lg md:text-xl">
             Manage patients, appointments, billing, pharmacy, and more with ease.
@@ -75,7 +75,7 @@ const Home = () => {
       <section className="bg-blue-600 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-semibold">
-            Ready to get started with our Hospital Management System?
+            Ready to get started with MediCare Hospital ?
           </h2>
           <button className="mt-6 px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-black font-bold rounded-lg">
             Contact Us

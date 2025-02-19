@@ -36,7 +36,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         {/* Logo Section */}
         <div className="text-xl font-bold text-blue-500 dark:text-blue-300">
-          <a href="/">HospitalSystem</a>
+          <a href="/">MediCare Hospital</a>
         </div>
 
         {/* Navbar Links */}
