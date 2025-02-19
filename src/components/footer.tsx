@@ -56,9 +56,10 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Copyright Section */}
+      {/* Copyright and Credit Section */}
       <div className="mt-12 text-center text-gray-400">
         <p>&copy; 2025 Hospital Management System. All rights reserved.</p>
+        <p className="mt-2">Powered by <a href="https://kimtech.site" target="_blank" rel="noopener noreferrer" className="text-yellow-500 hover:text-yellow-400">KimTech.site</a></p>
       </div>
     </footer>
   );
