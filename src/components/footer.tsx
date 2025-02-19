@@ -60,6 +60,7 @@ const Footer = () => {
       {/* Copyright and Credit Section */}
       <div className="mt-12 text-center text-gray-400">
         <p>&copy; 2025 MediCare Hospital. All rights reserved.</p>
+        <p className="text-sm mt-2">Powered by <span className="text-yellow-400 font-semibold">Kimtech.Lite</span></p> {/* ✅ Added here */}
       </div>
     </footer>
   );
