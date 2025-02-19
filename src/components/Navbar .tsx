@@ -1,32 +1,8 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom"; // Ensure you're using React Router
-
+// import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 const Navbar = () => {
-  const [isDarkMode, setDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const toggleDarkMode = () => {
-    setDarkMode(!isDarkMode);
-  };
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-      setDarkMode(savedTheme === "dark");
-    } else {
-      setDarkMode(false); // Default theme is light mode
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.setAttribute("data-theme", "dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.removeAttribute("data-theme");
-      localStorage.setItem("theme", "light");
-    }
-  }, [isDarkMode]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -71,27 +47,6 @@ const Navbar = () => {
               Sign Up
             </button>
           </Link>
-        </div>
-
-        {/* Toggle Button for Dark/Light Mode */}
-        <div className="flex items-center space-x-4">
-          <label className="inline-flex items-center cursor-pointer">
-            <span className="text-gray-700 dark:text-gray-200">🌙</span>
-            <input
-              type="checkbox"
-              className="hidden"
-              checked={isDarkMode}
-              onChange={toggleDarkMode}
-            />
-            <span className="w-12 h-6 bg-gray-300 dark:bg-gray-700 rounded-full relative inline-block transition-all duration-300">
-              <span
-                className={`w-6 h-6 bg-white rounded-full absolute top-0 left-0 transition-all duration-300 ${
-                  isDarkMode ? "transform translate-x-full" : ""
-                }`}
-              ></span>
-            </span>
-            <span className="text-gray-700 dark:text-gray-200">☀️</span>
-          </label>
         </div>
 
         {/* Mobile Menu Button */}

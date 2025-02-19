@@ -8,6 +8,8 @@ import Contact from './pages/contact';
 import Features from './pages/features';
 import FAQ from './pages/fqa';
 import LoginPage from './features/auth/login/login';
+import ForgotPassword from './pages/forgetpassword';
+import Dashboard from './components/dashboard';
 
 
 const Router: React.FC = () => {
@@ -46,6 +48,16 @@ const Router: React.FC = () => {
     {
       path: '/login', // This is the path for the Reset Password page
       element: <LoginPage/>,
+      // errorElement: <Error /> 
+    },
+    {
+      path: '/forgot-password', // This is the path for the Reset Password page
+      element: <ForgotPassword/>,
+      // errorElement: <Error /> 
+    },
+    {
+      path: '/dashboard', // This is the path for the Reset Password page
+      element: <Dashboard/>,
       // errorElement: <Error /> 
     },
   ]);
