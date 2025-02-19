@@ -22,11 +22,11 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="text-xl font-semibold text-yellow-400">Quick Links</h3>
             <div className="flex flex-col items-center md:items-start space-y-2">
-              <Link to="#home" className="text-gray-300 hover:text-yellow-500">Home</Link>
-              <Link to="#features" className="text-gray-300 hover:text-yellow-500">Features</Link>
-              <Link to="#about" className="text-gray-300 hover:text-yellow-500">About</Link>
-              <Link to="#contact" className="text-gray-300 hover:text-yellow-500">Contact</Link>
-              <Link to="#faq" className="text-gray-300 hover:text-yellow-500">FAQ</Link>
+              <a href="#home" className="text-gray-300 hover:text-yellow-500">Home</a>
+              <a href="#features" className="text-gray-300 hover:text-yellow-500">Features</a>
+              <a href="#about" className="text-gray-300 hover:text-yellow-500">About</a>
+              <a href="#contact" className="text-gray-300 hover:text-yellow-500">Contact</a>
+              <a href="#faq" className="text-gray-300 hover:text-yellow-500">FAQ</a>
             </div>
           </div>
 
