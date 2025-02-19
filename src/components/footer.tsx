@@ -23,7 +23,8 @@ const Footer = () => {
             <h3 className="text-xl font-semibold text-yellow-400">Quick Links</h3>
             <div className="flex flex-col items-center md:items-start space-y-2">
               <a href="/" className="text-gray-300 hover:text-yellow-500">Home</a>
-              <a href="services" className="text-gray-300 hover:text-yellow-500">Our Services</a>
+              <a href="features" className="text-gray-300 hover:text-yellow-500">
+              Features</a>
               <a href="about" className="text-gray-300 hover:text-yellow-500">About</a>
               <a href="contact" className="text-gray-300 hover:text-yellow-500">Contact</a>
               <a href="faq" className="text-gray-300 hover:text-yellow-500">FAQ</a>
