@@ -1,6 +1,9 @@
+
+
+
 import { useEffect, useState } from "react";
 import { Link, useNavigate, Outlet } from "react-router-dom";
-import { Bell, Calendar, ClipboardList, Users, Pill, LayoutDashboard, Menu, LogOut,BriefcaseIcon,FileText,} from "lucide-react";
+import { Bell, Calendar, ClipboardList, Users, Pill, LayoutDashboard, Menu, LogOut, BriefcaseIcon, FileText } from "lucide-react";
 
 const StaffDashboard = () => {
     const [role, setRole] = useState<string | null>(null);
@@ -20,21 +23,25 @@ const StaffDashboard = () => {
         navigate("/login");
     };
 
+    const handleLinkClick = () => {
+        if (window.innerWidth < 768) {
+            setSidebarOpen(false);
+        }
+    };
+
     return (
         <div className="flex h-screen">
             {/* Sidebar */}
             <div className={`fixed md:relative z-50 md:z-auto h-full bg-blue-900 text-white p-5 transition-transform transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 w-64`}>
                 <h1 className="text-2xl font-bold mb-6">Hospital Admin</h1>
                 <ul className="space-y-4">
-                    <li><Link to="/dashboard" className="block p-2 bg-blue-700 hover:bg-blue-800 rounded flex items-center"><LayoutDashboard className="mr-2" /> Dashboard</Link></li>
-                    <li><Link to="/dashboard/appointments" className="block p-2 bg-blue-700 hover:bg-blue-800 rounded flex items-center"><Calendar className="mr-2" /> Appointments</Link></li>
-                    <li><Link to="/dashboard/patients" className="block p-2 bg-blue-700 hover:bg-blue-800 rounded flex items-center"><Users className="mr-2" /> Patients</Link></li>
-                    <li><Link to="/dashboard/staff" className="block p-2 bg-blue-700 hover:bg-blue-800 rounded flex items-center"><BriefcaseIcon className="mr-2" /> Staff</Link></li>
-                    <li><Link to="/dashboard/prescriptions" className="block p-2 bg-blue-700 hover:bg-blue-800 rounded flex items-center"><FileText className="mr-2" />Prescription</Link></li>
-                    <li><Link to="/dashboard/pharmacy" className="block p-2 bg-blue-700 hover:bg-blue-800 rounded flex items-center"><Pill className="mr-2" /> Pharmacy</Link></li>
-                    <li><Link to="/dashboard/reports" className="block p-2 bg-blue-700 hover:bg-blue-800 rounded flex items-center"><ClipboardList className="mr-2" /> Reports</Link></li>
-                    
-                    {/* <li><Link to="/dashboard/phamacy" className="block p-2 bg-blue-700 hover:bg-blue-800 rounded flex items-center"><Package className="mr-2" />Phamacy</Link></li> */}
+                    <li><Link to="/dashboard" className="block p-2 bg-blue-700 hover:bg-blue-800 rounded flex items-center" onClick={handleLinkClick}><LayoutDashboard className="mr-2" /> Dashboard</Link></li>
+                    <li><Link to="/dashboard/appointments" className="block p-2 bg-blue-700 hover:bg-blue-800 rounded flex items-center" onClick={handleLinkClick}><Calendar className="mr-2" /> Appointments</Link></li>
+                    <li><Link to="/dashboard/patients" className="block p-2 bg-blue-700 hover:bg-blue-800 rounded flex items-center" onClick={handleLinkClick}><Users className="mr-2" /> Patients</Link></li>
+                    <li><Link to="/dashboard/staff" className="block p-2 bg-blue-700 hover:bg-blue-800 rounded flex items-center" onClick={handleLinkClick}><BriefcaseIcon className="mr-2" /> Staff</Link></li>
+                    <li><Link to="/dashboard/prescriptions" className="block p-2 bg-blue-700 hover:bg-blue-800 rounded flex items-center" onClick={handleLinkClick}><FileText className="mr-2" /> Prescription</Link></li>
+                    <li><Link to="/dashboard/pharmacy" className="block p-2 bg-blue-700 hover:bg-blue-800 rounded flex items-center" onClick={handleLinkClick}><Pill className="mr-2" /> Pharmacy</Link></li>
+                    <li><Link to="/dashboard/reports" className="block p-2 bg-blue-700 hover:bg-blue-800 rounded flex items-center" onClick={handleLinkClick}><ClipboardList className="mr-2" /> Reports</Link></li>
                     <li>
                         <button
                             onClick={handleLogout}
