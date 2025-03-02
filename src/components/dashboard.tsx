@@ -1,32 +1,73 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, Outlet } from "react-router-dom";
+import { Bell, Calendar, ClipboardList, Users, Pill, LayoutDashboard, Menu, LogOut,BriefcaseIcon,FileText,} from "lucide-react";
 
-const Dashboard = () => {
-  const navigate = useNavigate();
+const StaffDashboard = () => {
+    const [role, setRole] = useState<string | null>(null);
+    const [isSidebarOpen, setSidebarOpen] = useState(false);
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    document.title = "Dashboard | MediCare Hospital";
-  }, []);
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            const payload = JSON.parse(atob(token.split(".")[1]));
+            setRole(payload.role);
+        }
+    }, []);
 
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 text-center p-6">
-      <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">Dashboard</h1>
-      <p className="text-lg text-gray-600 dark:text-gray-300 mt-4">
-        The system is currently under maintenance.
-      </p>
-      <p className="text-gray-500 dark:text-gray-400 mt-2">
-        We are working hard to improve your experience. Please check back later.
-      </p>
-      <div className="mt-6">
-        <button
-          onClick={() => navigate("/")}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-        >
-          Go to Homepage
-        </button>
-      </div>
-    </div>
-  );
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/login");
+    };
+
+    return (
+        <div className="flex h-screen">
+            {/* Sidebar */}
+            <div className={`fixed md:relative z-50 md:z-auto h-full bg-blue-900 text-white p-5 transition-transform transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 w-64`}>
+                <h1 className="text-2xl font-bold mb-6">Hospital Admin</h1>
+                <ul className="space-y-4">
+                    <li><Link to="/dashboard" className="block p-2 bg-blue-700 hover:bg-blue-800 rounded flex items-center"><LayoutDashboard className="mr-2" /> Dashboard</Link></li>
+                    <li><Link to="/dashboard/appointments" className="block p-2 bg-blue-700 hover:bg-blue-800 rounded flex items-center"><Calendar className="mr-2" /> Appointments</Link></li>
+                    <li><Link to="/dashboard/patients" className="block p-2 bg-blue-700 hover:bg-blue-800 rounded flex items-center"><Users className="mr-2" /> Patients</Link></li>
+                    <li><Link to="/dashboard/staff" className="block p-2 bg-blue-700 hover:bg-blue-800 rounded flex items-center"><BriefcaseIcon className="mr-2" /> Staff</Link></li>
+                    <li><Link to="/dashboard/prescriptions" className="block p-2 bg-blue-700 hover:bg-blue-800 rounded flex items-center"><FileText className="mr-2" />Prescription</Link></li>
+                    <li><Link to="/dashboard/pharmacy" className="block p-2 bg-blue-700 hover:bg-blue-800 rounded flex items-center"><Pill className="mr-2" /> Pharmacy</Link></li>
+                    <li><Link to="/dashboard/reports" className="block p-2 bg-blue-700 hover:bg-blue-800 rounded flex items-center"><ClipboardList className="mr-2" /> Reports</Link></li>
+                    
+                    {/* <li><Link to="/dashboard/phamacy" className="block p-2 bg-blue-700 hover:bg-blue-800 rounded flex items-center"><Package className="mr-2" />Phamacy</Link></li> */}
+                    <li>
+                        <button
+                            onClick={handleLogout}
+                            className="block w-full text-left p-2 bg-red-600 hover:bg-red-700 rounded flex items-center"
+                        >
+                            <LogOut className="mr-2" /> Logout
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            {/* Main Content */}
+            <div className="flex-1 p-4 md:p-10 bg-gray-100 overflow-auto border-l border-gray-300">
+                <div className="flex justify-between items-center mb-8">
+                    <button
+                        className="md:hidden p-2 bg-blue-900 text-white rounded"
+                        onClick={() => setSidebarOpen(!isSidebarOpen)}
+                    >
+                        <Menu />
+                    </button>
+                    <h2 className="text-3xl font-bold">Welcome, {role || 'Staff'}!</h2>
+                    <button className="flex items-center p-2 border border-gray-300 rounded hover:bg-gray-200">
+                        <Bell className="mr-2" /> Notifications
+                    </button>
+                </div>
+
+                {/* Frame for Main Content */}
+                <div className="bg-white p-6 md:p-8 rounded-lg shadow-md">
+                    <Outlet />
+                </div>
+            </div>
+        </div>
+    );
 };
 
-export default Dashboard;
+export default StaffDashboard;

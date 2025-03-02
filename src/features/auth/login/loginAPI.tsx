@@ -6,7 +6,7 @@ export const loginAPI = createApi({
   endpoints: (builder) => ({
     loginUser: builder.mutation({
       query: (credentials) => ({
-        url: "/auth/login",
+        url: "auth/login",
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: credentials,
@@ -14,13 +14,37 @@ export const loginAPI = createApi({
     }),
     requestPasswordReset: builder.mutation({
       query: (email) => ({
-        url: "/auth/request-password-reset",
+        url: "auth/request-password-reset",
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(email), // ✅ Ensure JSON structure
+        body: JSON.stringify(email), // Expecting { email: "example@example.com" }
+      }),
+    }),
+    verifyOtpResetPassword: builder.mutation({
+      query: ({ email, otp, new_password }) => ({
+        url: "auth/verify-otp-reset-password",
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, otp, new_password }),
+      }),
+    }),
+    changePassword: builder.mutation({
+      query: ({ old_password, new_password, token }) => ({
+        url: "auth/change-password",
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({ old_password, new_password }),
       }),
     }),
   }),
 });
 
-export const { useLoginUserMutation, useRequestPasswordResetMutation } = loginAPI;
+export const { 
+  useLoginUserMutation, 
+  useRequestPasswordResetMutation, 
+  useVerifyOtpResetPasswordMutation, 
+  useChangePasswordMutation 
+} = loginAPI;

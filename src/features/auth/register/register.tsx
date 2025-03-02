@@ -1,9 +1,152 @@
+// import React, { useState } from "react";
+// import { useNavigate } from "react-router-dom"; // Import useNavigate
+// import Navbar from "../../../components/Navbar ";
+// import Footer from "../../../components/footer";
+// import { useRegisterUserMutation } from "../register/registerAPI"; // Adjust the import path
+// import Spinner from "../../../components/spinner";
+
+// interface FormData {
+//   username: string;
+//   email: string;
+//   password: string;
+//   dob: string;
+//   contact: string;
+//   full_name: string;
+// }
+
+// const RegisterPage: React.FC = () => {
+//   const navigate = useNavigate(); // Initialize useNavigate
+//   const [formData, setFormData] = useState<FormData>({
+//     username: "",
+//     email: "",
+//     password: "",
+//     dob: "",
+//     contact: "",
+//     full_name: "",
+//   });
+
+//   const [registerUser, { data, isLoading, error }] = useRegisterUserMutation();
+
+//   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     setFormData({ ...formData, [e.target.name]: e.target.value });
+//   };
+
+//   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+//     e.preventDefault();
+//     try {
+//       await registerUser(formData).unwrap();
+//       setFormData({
+//         username: "",
+//         email: "",
+//         password: "",
+//         dob: "",
+//         contact: "",
+//         full_name: "",
+//       });
+//       navigate("/login"); // Navigate to login page after successful registration
+//     } catch (err) {
+//       console.error("Registration error:", err);
+//     }
+//   };
+
+//   const getErrorMessage = () => {
+//     if (error) {
+//       const errorDetail = (error as any)?.data?.detail;
+//       if (errorDetail?.includes("database integrity error")) {
+//         return "This account is already registered. Please log in.";
+//       }
+//       if (errorDetail === "Email already registered") {
+//         return "This account is already registered. Please log in.";
+//       }
+//       return `Registration failed: ${errorDetail || "Unknown error"}`;
+//     }
+//     return null;
+//   };
+
+//   const today = new Date().toISOString().split("T")[0];
+
+//   return (
+//     <>
+//       <Navbar />
+//       <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
+//         <div className="w-full max-w-md bg-white dark:bg-gray-800 shadow-lg rounded-xl p-6 sm:p-8">
+//           <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-gray-200">
+//             Create an Account
+//           </h2>
+//           <p className="text-gray-500 dark:text-gray-400 text-center text-sm mt-1">
+//             Join MediCare Hospital Management System today
+//           </p>
+
+//           <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+//             {[
+//               { label: "Username", type: "text", name: "username" },
+//               { label: "Email", type: "email", name: "email" },
+//               { label: "Password", type: "password", name: "password" },
+//               { label: "Date of Birth", type: "date", name: "dob", max: today },
+//               { label: "Contact", type: "text", name: "contact" },
+//               { label: "Full Name", type: "text", name: "full_name" },
+//             ].map(({ label, type, name, max }) => (
+//               <div key={name}>
+//                 <label className="block text-sm text-gray-700 dark:text-gray-300">
+//                   {label}
+//                 </label>
+//                 <input
+//                   type={type}
+//                   name={name}
+//                   value={formData[name as keyof FormData]}
+//                   onChange={handleChange}
+//                   max={max}
+//                   className="w-full px-3 py-2 border rounded-lg bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+//                   required
+//                 />
+//               </div>
+//             ))}
+
+//             <button
+//               type="submit"
+//               disabled={isLoading}
+//               className="w-full px-4 py-2 text-white font-semibold bg-blue-600 hover:bg-blue-700 rounded-lg transition duration-300 disabled:bg-blue-400 flex items-center justify-center"
+//             >
+//               {isLoading ? <Spinner /> : "Sign Up"}
+//             </button>
+//           </form>
+
+//           {error && (
+//             <p className="mt-4 text-center text-red-500 text-sm">
+//               {getErrorMessage()}
+//             </p>
+//           )}
+//           {data && (
+//             <p className="mt-4 text-center text-green-500 text-sm">
+//               Registration successful! Redirecting...
+//             </p>
+//           )}
+
+//           <p className="mt-4 text-sm text-center text-gray-600 dark:text-gray-400">
+//             Already have an account?{" "}
+//             <a href="/login" className="text-blue-600 hover:underline">
+//               Sign in
+//             </a>
+//           </p>
+//         </div>
+//       </div>
+//       <Footer />
+//     </>
+//   );
+// };
+
+// export default RegisterPage;
+
+
+
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import Navbar from "../../../components/Navbar ";
 import Footer from "../../../components/footer";
-import { useRegisterUserMutation } from "../register/registerAPI"; // Adjust the import path
+import { useRegisterUserMutation } from "../register/registerAPI";
 import Spinner from "../../../components/spinner";
+import { FaUser, FaEnvelope, FaLock, FaCalendar, FaPhone, FaUserAlt } from "react-icons/fa"; // Import icons
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai"; // Import eye icons for password visibility
 
 interface FormData {
   username: string;
@@ -15,7 +158,7 @@ interface FormData {
 }
 
 const RegisterPage: React.FC = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<FormData>({
     username: "",
     email: "",
@@ -25,6 +168,7 @@ const RegisterPage: React.FC = () => {
     full_name: "",
   });
 
+  const [showPassword, setShowPassword] = useState(false);
   const [registerUser, { data, isLoading, error }] = useRegisterUserMutation();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,7 +187,7 @@ const RegisterPage: React.FC = () => {
         contact: "",
         full_name: "",
       });
-      navigate("/login"); // Navigate to login page after successful registration
+      navigate("/login");
     } catch (err) {
       console.error("Registration error:", err);
     }
@@ -79,26 +223,44 @@ const RegisterPage: React.FC = () => {
 
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">
             {[
-              { label: "Username", type: "text", name: "username" },
-              { label: "Email", type: "email", name: "email" },
-              { label: "Password", type: "password", name: "password" },
-              { label: "Date of Birth", type: "date", name: "dob", max: today },
-              { label: "Contact", type: "text", name: "contact" },
-              { label: "Full Name", type: "text", name: "full_name" },
-            ].map(({ label, type, name, max }) => (
-              <div key={name}>
+              { label: "Username", type: "text", name: "username", icon: <FaUser /> },
+              { label: "Email", type: "email", name: "email", icon: <FaEnvelope /> },
+              {
+                label: "Password",
+                type: showPassword ? "text" : "password",
+                name: "password",
+                icon: <FaLock />,
+              },
+              { label: "Date of Birth", type: "date", name: "dob", max: today, icon: <FaCalendar /> },
+              { label: "Contact", type: "text", name: "contact", icon: <FaPhone /> },
+              { label: "Full Name", type: "text", name: "full_name", icon: <FaUserAlt /> },
+            ].map(({ label, type, name, icon, max }) => (
+              <div key={name} className="relative">
                 <label className="block text-sm text-gray-700 dark:text-gray-300">
                   {label}
                 </label>
-                <input
-                  type={type}
-                  name={name}
-                  value={formData[name as keyof FormData]}
-                  onChange={handleChange}
-                  max={max}
-                  className="w-full px-3 py-2 border rounded-lg bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
+                <div className="relative">
+                  <input
+                    type={type}
+                    name={name}
+                    value={formData[name as keyof FormData]}
+                    onChange={handleChange}
+                    max={max}
+                    className="w-full px-3 py-2 pl-10 border rounded-lg bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    {icon}
+                  </div>
+                  {name === "password" && (
+                    <div
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
+                    </div>
+                  )}
+                </div>
               </div>
             ))}
 
