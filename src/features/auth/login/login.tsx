@@ -1,6 +1,7 @@
 
 
 
+
 // import React, { useState } from "react";
 // import { useLoginUserMutation } from "../login/loginAPI";
 // import { useNavigate } from "react-router-dom";
@@ -32,20 +33,26 @@
 //     try {
 //       const response = await loginUser(formData).unwrap();
 //       console.log("Login successful:", response);
-      
+
 //       // Save token and get role
 //       const token = response.access_token;
 //       localStorage.setItem("token", token);
-      
+
+//       // Decode the token to extract the payload
 //       const payload = JSON.parse(atob(token.split(".")[1]));
+//       console.log("Decoded payload:", payload); // Debugging line
+
 //       const userRole = payload.role;
+//       console.log("User role:", userRole); // Debugging line
 
 //       toast.success("✅ Login successful!");
 
 //       // Redirect based on role
-//       if (userRole === "PATIENT") {
+//       if (userRole.toLowerCase() === "patient") {
+//         console.log("Navigating to patient-dashboard"); // Debugging line
 //         navigate("/patient-dashboard");
 //       } else {
+//         console.log("Navigating to dashboard"); // Debugging line
 //         navigate("/dashboard");
 //       }
 //     } catch (err: unknown) {
@@ -138,10 +145,7 @@
 
 // export default LoginPage;
 
-
-
-
-import React, { useState } from "react";
+import  { useState } from "react";
 import { useLoginUserMutation } from "../login/loginAPI";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../../components/Navbar ";
@@ -157,7 +161,7 @@ const LoginPage = () => {
   const [loginUser, { isLoading }] = useLoginUserMutation();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     console.log("Submitting:", { username, password });
 
@@ -194,7 +198,7 @@ const LoginPage = () => {
         console.log("Navigating to dashboard"); // Debugging line
         navigate("/dashboard");
       }
-    } catch (err: unknown) {
+    } catch (err) {
       if (err instanceof Error) {
         console.error("Login error:", err.message);
         toast.error(`❌ Login failed: ${err.message}`);
@@ -213,18 +217,18 @@ const LoginPage = () => {
     <>
       <Navbar />
       <ToastContainer position="top-center" autoClose={3000} />
-      <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-950">
-        <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg w-96 border border-gray-300 dark:border-gray-700">
-          <h2 className="text-2xl font-semibold text-center mb-4 text-gray-800 dark:text-gray-100">
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg p-6 rounded-full shadow-lg w-96 h-96 flex flex-col items-center justify-center border border-gray-300">
+          <h2 className="text-2xl font-semibold text-center mb-4 text-gray-800">
             Login
           </h2>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="w-full max-w-xs">
             <div className="mb-4 relative">
-              <label className="block text-gray-700 dark:text-gray-300">Username</label>
+              <label className="block text-gray-700">Username</label>
               <div className="relative">
                 <input
                   type="text"
-                  className="w-full px-3 py-2 pl-10 border rounded-lg focus:outline-none dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200"
+                  className="w-full px-3 py-2 pl-10 border rounded-full focus:outline-none bg-transparent"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
@@ -235,11 +239,11 @@ const LoginPage = () => {
               </div>
             </div>
             <div className="mb-4 relative">
-              <label className="block text-gray-700 dark:text-gray-300">Password</label>
+              <label className="block text-gray-700">Password</label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
-                  className="w-full px-3 py-2 pl-10 border rounded-lg focus:outline-none dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200"
+                  className="w-full px-3 py-2 pl-10 border rounded-full focus:outline-none bg-transparent"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -257,7 +261,7 @@ const LoginPage = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 flex items-center justify-center"
+              className="w-full bg-blue-500 text-white py-2 rounded-full hover:bg-blue-600 flex items-center justify-center"
               disabled={isLoading}
             >
               {isLoading ? (
@@ -283,4 +287,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
