@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const appointmentAPI = createApi({
   reducerPath: 'appointmentAPI',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://hospital-api-ux1e.onrender.com/',
+    baseUrl: 'https://hospitalapi-aafufvbddvfpfzaq.southafricanorth-01.azurewebsites.net/',
     prepareHeaders: (headers) => {
       const token = localStorage.getItem('token'); // Get token from localStorage
       console.log('API Response:', token); 
