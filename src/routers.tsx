@@ -23,6 +23,94 @@ import Pharmacy from './features/phamacy/phamacy';
 import DashboardHome from './pages/dashboardhome';
 import PatientDashboard from './components/patientsdashboard';
 
+// const Router: React.FC = () => {
+//   const router = createBrowserRouter([
+//     {
+//       path: '/',
+//       element: <Home />,
+//     },
+//     {
+//       path: '/register',
+//       element: <RegisterPage />,
+//     },
+//     {
+//       path: '/about',
+//       element: <About />,
+//     },
+//     {
+//       path: '/contact',
+//       element: <Contact />,
+//     },
+//     {
+//       path: '/features',
+//       element: <Features />,
+//     },
+//     {
+//       path: '/faq',
+//       element: <FAQ />,
+//     },
+//     {
+//       path: '/login',
+//       element: <LoginPage />,
+//     },
+//     {
+//       path: '/forgot-password',
+//       element: <ForgotPassword />,
+//     },
+//     {
+//       path: '/verify-otp',
+//       element: <VerifyOtp />,
+//     },
+//     {
+//       path: '/patient-dashboard',
+//       element: <PatientDashboard/>,
+//     },
+
+
+//     // 🟩 Wrap dashboard routes to render inside the layout
+//     {
+//       path: '/dashboard',
+//       element: <StaffDashboard />, // Your dashboard layout with the sidebar
+//       children: [
+//         {
+//           index: true, // Default dashboard view
+//           element: <DashboardHome />,
+//         },
+//         {
+//           path: 'appointments',
+//           element: <AppointmentAdmin />,
+//         },
+//         {
+//           path: 'patients',
+//           element: <Patients />,
+//         },
+//         {
+//           path: 'staff',
+//           element: <StaffManagement />,
+//         },
+//         {
+//           path: 'prescriptions',
+//           element: <PrescriptionManagement/>,
+//         },
+//         {
+//           path: 'pharmacy',
+//           element: <Pharmacy />,
+//         },
+//         {
+//           path: 'reports',
+//           element: <Reports />,
+//         },
+       
+//       ],
+//     },
+//   ]);
+
+//   return <RouterProvider router={router} />;
+// };
+
+// export default Router;
+
+
 const Router: React.FC = () => {
   const router = createBrowserRouter([
     {
@@ -61,19 +149,46 @@ const Router: React.FC = () => {
       path: '/verify-otp',
       element: <VerifyOtp />,
     },
+
+    // 🟩 Patient Dashboard Routes
     {
       path: '/patient-dashboard',
-      element: <PatientDashboard/>,
-    },
-
-
-    // 🟩 Wrap dashboard routes to render inside the layout
-    {
-      path: '/dashboard',
-      element: <StaffDashboard />, // Your dashboard layout with the sidebar
+      element: <PatientDashboard />, // Patient layout with sidebar
       children: [
         {
-          index: true, // Default dashboard view
+          index: true, // Default patient dashboard view
+          element: <DashboardHome />,
+        },
+        {
+          path: 'dashboard',
+          element: <DashboardHome />,
+        },
+        {
+          path: 'appointments',
+          element: <Pharmacy />, // Or a patient-specific component
+        },
+        {
+          path: 'medical-history',
+          element: <Patients />, // Replace with MedicalHistory component
+        },
+        {
+          path: 'prescriptions',
+          element: <PrescriptionManagement />, // Or a patient prescription view
+        },
+        {
+          path: 'reports',
+          element: <Reports />, // Patient-specific reports
+        },
+      ],
+    },
+
+    // 🟩 Staff Dashboard Routes
+    {
+      path: '/dashboard',
+      element: <StaffDashboard />, // Staff layout with sidebar
+      children: [
+        {
+          index: true,
           element: <DashboardHome />,
         },
         {
@@ -90,7 +205,7 @@ const Router: React.FC = () => {
         },
         {
           path: 'prescriptions',
-          element: <PrescriptionManagement/>,
+          element: <PrescriptionManagement />,
         },
         {
           path: 'pharmacy',
@@ -100,7 +215,6 @@ const Router: React.FC = () => {
           path: 'reports',
           element: <Reports />,
         },
-       
       ],
     },
   ]);
