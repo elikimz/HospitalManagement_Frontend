@@ -142,7 +142,6 @@
 
 // export default Router;
 
-
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 // Import your components
 import Home from './pages/HomePage';
@@ -168,6 +167,7 @@ import Appointments from './patientFeatures/Appointments';
 import Payments from './patientFeatures/payments';
 import PaymentSuccess from './patientFeatures/success';
 import PaymentFailed from './patientFeatures/fail';
+import ErrorPage from './pages/errorpage';
 
 const Router: React.FC = () => {
   const router = createBrowserRouter([
@@ -181,24 +181,26 @@ const Router: React.FC = () => {
     { path: '/forgot-password', element: <ForgotPassword /> },
     { path: '/verify-otp', element: <VerifyOtp /> },
 
+    // 🟩 Global Payment Routes
+    { path: '/payment-success/:patientId', element: <PaymentSuccess /> },
+    { path: '/payment-failed/:patientId', element: <PaymentFailed /> },
+
     // 🟩 Patient Dashboard Routes
     {
       path: '/patient',
-      element: <PatientDashboard />, // Patient layout with sidebar
+      element: <PatientDashboard />, 
       children: [
         { index: true, element: <DashboardHome /> },
         { path: 'account', element: <MyAccount /> },
         { path: 'appointments', element: <Appointments /> },
         { path: 'payments', element: <Payments /> },
-        { path: 'payment-success/:patientId', element: <PaymentSuccess /> },
-        { path: 'payment-failed/:patientId', element: <PaymentFailed /> },
       ],
     },
 
     // 🟩 Staff Dashboard Routes
     {
       path: '/dashboard',
-      element: <StaffDashboard />,
+      element: <StaffDashboard />, 
       children: [
         { index: true, element: <DashboardHome /> },
         { path: 'appointments', element: <AppointmentAdmin /> },
@@ -209,9 +211,13 @@ const Router: React.FC = () => {
         { path: 'reports', element: <Reports /> },
       ],
     },
+
+    // 🟩 Catch-All Route for 404 Errors
+    { path: '*', element: <ErrorPage /> },
   ]);
 
   return <RouterProvider router={router} />;
 };
 
 export default Router;
+
