@@ -22,6 +22,9 @@ import Reports from './features/reports/reports';
 import Pharmacy from './features/phamacy/phamacy';
 import DashboardHome from './pages/dashboardhome';
 import PatientDashboard from './components/patientsdashboard';
+import MyAccount from './patientFeatures/myaccount';
+import Appointments from './patientFeatures/Appointments';
+import Payments from './patientFeatures/payments';
 
 // const Router: React.FC = () => {
 //   const router = createBrowserRouter([
@@ -152,7 +155,7 @@ const Router: React.FC = () => {
 
     // 🟩 Patient Dashboard Routes
     {
-      path: '/patient-dashboard',
+      path: '/patient',
       element: <PatientDashboard />, // Patient layout with sidebar
       children: [
         {
@@ -160,25 +163,25 @@ const Router: React.FC = () => {
           element: <DashboardHome />,
         },
         {
-          path: 'dashboard',
-          element: <DashboardHome />,
+          path: 'account',
+          element: <MyAccount />,
         },
         {
           path: 'appointments',
-          element: <Pharmacy />, // Or a patient-specific component
+          element: <Appointments />, // Or a patient-specific component
         },
         {
-          path: 'medical-history',
-          element: <Patients />, // Replace with MedicalHistory component
+          path: 'payments',
+          element: <Payments />, // Replace with MedicalHistory component
         },
-        {
-          path: 'prescriptions',
-          element: <PrescriptionManagement />, // Or a patient prescription view
-        },
-        {
-          path: 'reports',
-          element: <Reports />, // Patient-specific reports
-        },
+        // {
+        //   path: 'prescriptions',
+        //   element: <PrescriptionManagement />, // Or a patient prescription view
+        // },
+        // {
+        //   path: 'reports',
+        //   element: <Reports />, // Patient-specific reports
+        // },
       ],
     },
 

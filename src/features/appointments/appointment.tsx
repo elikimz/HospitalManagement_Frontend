@@ -216,7 +216,7 @@ import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
-  useGetAppointmentsQuery,
+  useGetAllAppointmentsQuery,
   useUpdateAppointmentMutation,
   useDeleteAppointmentMutation
 } from '../appointments/appontmentAPI';
@@ -236,7 +236,7 @@ interface Appointment {
 }
 
 const AppointmentAdmin = () => {
-  const { data: appointments, error, refetch } = useGetAppointmentsQuery(undefined, {
+  const { data: appointments, error, refetch } =   useGetAllAppointmentsQuery(undefined, {
     pollingInterval: 5000,
     refetchOnMountOrArgChange: true,
   });
