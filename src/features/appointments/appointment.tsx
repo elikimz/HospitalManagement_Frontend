@@ -1,8 +1,11 @@
+
+
+
 // import { useState, useEffect } from 'react';
 // import { toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 // import {
-//   useGetAppointmentsQuery,
+//   useGetAllAppointmentsQuery,
 //   useUpdateAppointmentMutation,
 //   useDeleteAppointmentMutation
 // } from '../appointments/appontmentAPI';
@@ -22,7 +25,7 @@
 // }
 
 // const AppointmentAdmin = () => {
-//   const { data: appointments, error, refetch } = useGetAppointmentsQuery(undefined, {
+//   const { data: appointments, error, refetch } =   useGetAllAppointmentsQuery(undefined, {
 //     pollingInterval: 5000,
 //     refetchOnMountOrArgChange: true,
 //   });
@@ -75,7 +78,7 @@
 //       await updateAppointment({ id: selectedAppointment.id, updatedData: formData }).unwrap();
 //       toast.success('Appointment updated successfully!');
 //       resetForm();
-//       refetch();
+//       refetchWithRetry();
 //     } catch (error) {
 //       console.error('Update error:', error);
 //       toast.error('Failed to update appointment: ' + ((error as { data?: { detail?: string } })?.data?.detail || 'Unknown error'));
@@ -96,6 +99,22 @@
 //   const resetForm = () => {
 //     setFormData({ date: '', reason: '', notes: '' });
 //     setSelectedAppointment(null);
+//   };
+
+//   const refetchWithRetry = async (retries = 3, delay = 2000) => {
+//     for (let attempt = 0; attempt < retries; attempt++) {
+//       try {
+//         await refetch();
+//         return;
+//       } catch (error) {
+//         console.error(`Attempt ${attempt + 1} failed:`, error);
+//         if (attempt < retries - 1) {
+//           await new Promise(resolve => setTimeout(resolve, delay)); // Exponential backoff
+//         } else {
+//           toast.error('Failed to load appointments after multiple attempts.');
+//         }
+//       }
+//     }
 //   };
 
 //   if (error) return <div className="text-center text-red-500">Error loading appointments: {((error as { data?: { detail?: string } })?.data?.detail || 'Unknown error')}</div>;
@@ -222,6 +241,20 @@ import {
 } from '../appointments/appontmentAPI';
 import { ClipLoader } from 'react-spinners';
 
+interface User {
+  id: number;
+  username: string;
+  email: string;
+}
+
+interface Patient {
+  id: number;
+  full_name: string;
+  dob: string;
+  contact: string;
+  user: User;
+}
+
 interface Appointment {
   id: number;
   patient_id: number;
@@ -233,10 +266,11 @@ interface Appointment {
   status: string;
   notes: string | null;
   created_at: string;
+  patient?: Patient; // Make patient optional
 }
 
 const AppointmentAdmin = () => {
-  const { data: appointments, error, refetch } =   useGetAllAppointmentsQuery(undefined, {
+  const { data: appointments, error, refetch } = useGetAllAppointmentsQuery(undefined, {
     pollingInterval: 5000,
     refetchOnMountOrArgChange: true,
   });
@@ -259,6 +293,7 @@ const AppointmentAdmin = () => {
 
   useEffect(() => {
     if (appointments) {
+      console.log('Fetched Appointments:', appointments); // Log the fetched appointments
       setLocalAppointments(appointments);
       setFilteredAppointments(appointments);
     }
@@ -378,61 +413,85 @@ const AppointmentAdmin = () => {
       <div className="bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Appointments List</h2>
         <ul className="space-y-6">
-          {filteredAppointments.map((appointment: Appointment) => (
-            <li key={appointment.id} className="border p-6 rounded-lg shadow-sm bg-gray-100 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="flex flex-col">
-                <strong className="text-gray-600">Patient ID</strong>
-                <p>{appointment.patient_id}</p>
-              </div>
-              <div className="flex flex-col">
-                <strong className="text-gray-600">Doctor ID</strong>
-                <p>{appointment.doctor_id}</p>
-              </div>
-              <div className="flex flex-col">
-                <strong className="text-gray-600">Date</strong>
-                <p>{new Date(appointment.date).toLocaleString()}</p>
-              </div>
-              <div className="flex flex-col">
-                <strong className="text-gray-600">Duration</strong>
-                <p>{appointment.duration} minutes</p>
-              </div>
-              <div className="flex flex-col">
-                <strong className="text-gray-600">Reason</strong>
-                <p>{appointment.reason}</p>
-              </div>
-              <div className="flex flex-col">
-                <strong className="text-gray-600">Type</strong>
-                <p>{appointment.appointment_type}</p>
-              </div>
-              <div className="flex flex-col">
-                <strong className="text-gray-600">Status</strong>
-                <p>{appointment.status}</p>
-              </div>
-              <div className="flex flex-col">
-                <strong className="text-gray-600">Notes</strong>
-                <p>{appointment.notes || 'None'}</p>
-              </div>
-              <div className="flex flex-col">
-                <strong className="text-gray-600">Created At</strong>
-                <p>{new Date(appointment.created_at).toLocaleString()}</p>
-              </div>
-              <div className="flex justify-end md:col-span-2 lg:col-span-4 space-x-3">
-                <button
-                  onClick={() => setSelectedAppointment(appointment)}
-                  className="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDelete(appointment.id)}
-                  className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition"
-                  disabled={isDeleting}
-                >
-                  {isDeleting ? <ClipLoader color="#fff" size={15} /> : 'Delete'}
-                </button>
-              </div>
-            </li>
-          ))}
+          {filteredAppointments.map((appointment: Appointment) => {
+            console.log('Appointment Data:', appointment); // Log each appointment data
+            return (
+              <li key={appointment.id} className="border p-6 rounded-lg shadow-sm bg-gray-100 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="flex flex-col">
+                  <strong className="text-gray-600">Patient ID</strong>
+                  <p>{appointment.patient_id}</p>
+                </div>
+                <div className="flex flex-col">
+                  <strong className="text-gray-600">Doctor ID</strong>
+                  <p>{appointment.doctor_id}</p>
+                </div>
+                <div className="flex flex-col">
+                  <strong className="text-gray-600">Date</strong>
+                  <p>{new Date(appointment.date).toLocaleString()}</p>
+                </div>
+                <div className="flex flex-col">
+                  <strong className="text-gray-600">Duration</strong>
+                  <p>{appointment.duration} minutes</p>
+                </div>
+                <div className="flex flex-col">
+                  <strong className="text-gray-600">Reason</strong>
+                  <p>{appointment.reason}</p>
+                </div>
+                <div className="flex flex-col">
+                  <strong className="text-gray-600">Type</strong>
+                  <p>{appointment.appointment_type}</p>
+                </div>
+                <div className="flex flex-col">
+                  <strong className="text-gray-600">Status</strong>
+                  <p>{appointment.status}</p>
+                </div>
+                <div className="flex flex-col">
+                  <strong className="text-gray-600">Notes</strong>
+                  <p>{appointment.notes || 'None'}</p>
+                </div>
+                <div className="flex flex-col">
+                  <strong className="text-gray-600">Created At</strong>
+                  <p>{new Date(appointment.created_at).toLocaleString()}</p>
+                </div>
+                {appointment.patient ? (
+                  <>
+                    <div className="flex flex-col">
+                      <strong className="text-gray-600">Patient Name</strong>
+                      <p>{appointment.patient.full_name}</p>
+                    </div>
+                    <div className="flex flex-col">
+                      <strong className="text-gray-600">Patient Username</strong>
+                      <p>{appointment.patient.user.username}</p>
+                    </div>
+                    <div className="flex flex-col">
+                      <strong className="text-gray-600">Patient Email</strong>
+                      <p>{appointment.patient.user.email}</p>
+                    </div>
+                  </>
+                ) : (
+                  <div className="flex flex-col">
+                    <strong className="text-gray-600">Patient Info</strong>
+                    <p>Not available</p>
+                  </div>
+                )}
+                <div className="flex justify-end md:col-span-2 lg:col-span-4 space-x-3">
+                  <button
+                    onClick={() => setSelectedAppointment(appointment)}
+                    className="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(appointment.id)}
+                    className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition"
+                    disabled={isDeleting}
+                  >
+                    {isDeleting ? <ClipLoader color="#fff" size={15} /> : 'Delete'}
+                  </button>
+                </div>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>

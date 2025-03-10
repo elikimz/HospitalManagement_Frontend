@@ -168,6 +168,7 @@ import Payments from './patientFeatures/payments';
 import PaymentSuccess from './patientFeatures/success';
 import PaymentFailed from './patientFeatures/fail';
 import ErrorPage from './pages/errorpage';
+import PrescriptionDetails from './patientFeatures/prescription';
 
 const Router: React.FC = () => {
   const router = createBrowserRouter([
@@ -194,6 +195,7 @@ const Router: React.FC = () => {
         { path: 'account', element: <MyAccount /> },
         { path: 'appointments', element: <Appointments /> },
         { path: 'payments', element: <Payments /> },
+        { path: 'prescriptions', element: <PrescriptionDetails /> },
       ],
     },
 

@@ -1,4 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
+
+
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -7,19 +9,42 @@ import {
   useGetPrescriptionByIdQuery,
   useUpdatePrescriptionMutation,
   useDeletePrescriptionMutation,
+
 } from '../prescriptions/prescriptionsAPI';
-
-
+import { useGetPatientsQuery } from '../patients/patientsAPI';
+import { useGetMedicinesQuery } from '../phamacy/phamacyAPI';
 interface FormData {
   patient_name: string;
   medicine_name: string;
   dosage: string;
 }
 
+interface Patient {
+  id: number;
+  full_name: string;
+  dob: string;
+  contact: string;
+  user: {
+    username: string;
+    email: string;
+    id: number;
+  };
+}
+
+interface Medicine {
+  id: number;
+  name: string;
+  stock: number;
+  price: number;
+  created_at: string;
+}
+
 const PrescriptionManagement = () => {
   const [createPrescription] = useCreatePrescriptionMutation();
   const [updatePrescription] = useUpdatePrescriptionMutation();
   const [deletePrescription] = useDeletePrescriptionMutation();
+  const { data: patients, isLoading: isLoadingPatients } = useGetPatientsQuery([]);
+  const { data: medicines, isLoading: isLoadingMedicines } = useGetMedicinesQuery([]);
 
   const [formData, setFormData] = useState<FormData>({
     patient_name: '',
@@ -136,20 +161,38 @@ const PrescriptionManagement = () => {
           {prescriptionId ? 'Update Prescription' : 'Add Prescription'}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <input
-            type="text"
-            placeholder="Patient Name"
+          <select
             value={formData.patient_name}
             onChange={(e) => setFormData({ ...formData, patient_name: e.target.value })}
             className="border p-2 rounded bg-gray-100"
-          />
-          <input
-            type="text"
-            placeholder="Medicine Name"
+          >
+            <option value="" disabled>Select Patient</option>
+            {isLoadingPatients ? (
+              <option disabled>Loading patients...</option>
+            ) : (
+              patients?.map((patient: Patient) => (
+                <option key={patient.id} value={patient.full_name}>
+                  {patient.full_name}
+                </option>
+              ))
+            )}
+          </select>
+          <select
             value={formData.medicine_name}
             onChange={(e) => setFormData({ ...formData, medicine_name: e.target.value })}
             className="border p-2 rounded bg-gray-100"
-          />
+          >
+            <option value="" disabled>Select Medicine</option>
+            {isLoadingMedicines ? (
+              <option disabled>Loading medicines...</option>
+            ) : (
+              medicines?.map((medicine: Medicine) => (
+                <option key={medicine.id} value={medicine.name}>
+                  {medicine.name}
+                </option>
+              ))
+            )}
+          </select>
           <input
             type="text"
             placeholder="Dosage"

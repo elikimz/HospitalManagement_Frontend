@@ -1,3 +1,6 @@
+
+
+
 // import React, { useState, useEffect } from 'react';
 // import {
 //   useGetPatientsQuery,
@@ -65,7 +68,8 @@
 //   );
 
 //   if (isLoading) return <div>Loading patients...</div>;
-//   if (error) return <div>Error loading patients: {error.message || error.toString()}</div>;
+//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//   if (error) return <div>Error loading patients: {(error as any).message || 'Unknown error'}</div>;
 
 //   return (
 //     <div className="p-6">
@@ -145,8 +149,6 @@
 
 // export default Patients;
 
-// // Let me know if you want me to tweak anything else! 🚀
-
 
 import React, { useState, useEffect } from 'react';
 import {
@@ -155,11 +157,18 @@ import {
   useDeletePatientMutation,
 } from '../patients/patientsAPI';
 
+interface User {
+  id: number;
+  username: string;
+  email: string;
+}
+
 interface Patient {
   id: number;
   full_name: string;
   dob: string;
   contact: string;
+  user: User;
 }
 
 const Patients: React.FC = () => {
@@ -211,7 +220,9 @@ const Patients: React.FC = () => {
 
   const filteredPatients = patients?.filter((patient: Patient) =>
     patient.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    patient.contact.includes(searchTerm)
+    patient.contact.includes(searchTerm) ||
+    patient.user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    patient.user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   if (isLoading) return <div>Loading patients...</div>;
@@ -223,7 +234,7 @@ const Patients: React.FC = () => {
       <h1 className="text-2xl font-bold mb-4">Patients</h1>
       <input
         type="text"
-        placeholder="Search by name or contact..."
+        placeholder="Search by name, contact, username, or email..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         className="border p-2 rounded mb-4 w-full"
@@ -272,6 +283,8 @@ const Patients: React.FC = () => {
                 <p><strong>Name:</strong> {patient.full_name}</p>
                 <p><strong>DOB:</strong> {formatDate(patient.dob)}</p>
                 <p><strong>Contact:</strong> {patient.contact}</p>
+                <p><strong>Username:</strong> {patient.user.username}</p>
+                <p><strong>Email:</strong> {patient.user.email}</p>
                 <button
                   onClick={() => handleEdit(patient)}
                   className="bg-yellow-500 text-white px-4 py-2 rounded mr-2"
