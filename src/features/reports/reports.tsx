@@ -9,7 +9,7 @@ const Reports: React.FC = () => {
     const interval = setInterval(() => {
       refetchOverview();
       refetchFinancial();
-    }, 30000); // Refresh every 30 seconds
+    }, 3000); // Refresh every 30 seconds
 
     return () => clearInterval(interval);
   }, [refetchOverview, refetchFinancial]);
