@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Link, useNavigate, Outlet } from "react-router-dom";
-import { Bell, Calendar,Pill, LayoutDashboard, Menu, LogOut, FileText, User } from "lucide-react";
+import { Bell, Calendar,Pill, LayoutDashboard, Menu, LogOut, FileText, User, ClipboardList } from "lucide-react";
 import { useGetMeQuery } from "../features/auth/login/loginAPI"; 
 
 const PatientDashboard = () => {
@@ -39,7 +39,7 @@ const PatientDashboard = () => {
                     <li><Link to="/patient/appointments" className="block p-2 bg-teal-600 hover:bg-teal-700 rounded flex items-center" onClick={handleLinkClick}><Calendar className="mr-2" /> Appointments</Link></li>
                     <li><Link to="/patient/prescriptions" className="block p-2 bg-teal-600 hover:bg-teal-700 rounded flex items-center" onClick={handleLinkClick}><Pill className="mr-2" /> Prescriptions</Link></li>
                     <li><Link to="/patient/payments" className="block p-2 bg-teal-600 hover:bg-teal-700 rounded flex items-center" onClick={handleLinkClick}><FileText className="mr-2" /> Payments</Link></li>
-                    {/* <li><Link to="/patient/reports" className="block p-2 bg-teal-600 hover:bg-teal-700 rounded flex items-center" onClick={handleLinkClick}><ClipboardList className="mr-2" /> Reports</Link></li> */}
+                    <li><Link to="/patient/receiptpage" className="block p-2 bg-teal-600 hover:bg-teal-700 rounded flex items-center" onClick={handleLinkClick}><ClipboardList className="mr-2" /> Receipts</Link></li>
 
                     <li>
                         <button

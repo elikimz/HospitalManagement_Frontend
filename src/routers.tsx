@@ -28,6 +28,7 @@ import PaymentFailed from './patientFeatures/fail';
 import ErrorPage from './pages/errorpage';
 import PrescriptionDetails from './patientFeatures/prescription';
 import PatientsDashboard from './patientFeatures/reports';
+import ReceiptPage from './patientFeatures/receiptpage';
 
 const Router: React.FC = () => {
   const router = createBrowserRouter([
@@ -45,6 +46,8 @@ const Router: React.FC = () => {
     { path: '/payment-success/:patientId', element: <PaymentSuccess /> },
     { path: '/payment-failed/:patientId', element: <PaymentFailed /> },
 
+    
+
     // 🟩 Patient Dashboard Routes
     {
       path: '/patient',
@@ -55,6 +58,8 @@ const Router: React.FC = () => {
         { path: 'appointments', element: <Appointments /> },
         { path: 'payments', element: <Payments /> },
         { path: 'prescriptions', element: <PrescriptionDetails /> },
+        { path: 'receiptpage', element: <ReceiptPage /> },
+        
       ],
     },
 

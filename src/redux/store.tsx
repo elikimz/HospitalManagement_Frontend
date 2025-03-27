@@ -15,6 +15,7 @@ import { PrescriptionAPI } from "../features/prescriptions/prescriptionsAPI";
 import { PharmacyAPI } from "../features/phamacy/phamacyAPI";
 import { ReportsAPI } from "../features/reports/reportsAPI";
 import {PaymentAPI} from "../patientFeatures/paymentsAPI";
+import {ReceiptAPI} from "../patientFeatures/receiptAPI";
 
 const persistConfig = {
   key: "root",
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   [PharmacyAPI.reducerPath]:PharmacyAPI.reducer,
   [ReportsAPI.reducerPath]:ReportsAPI.reducer,
   [PaymentAPI.reducerPath]:PaymentAPI.reducer,
+  [ReceiptAPI.reducerPath]:ReceiptAPI.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -42,7 +44,9 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(registerAPI.middleware, loginAPI.middleware, appointmentAPI.middleware, PatientsAPI.middleware ,StaffAPI.middleware ,PrescriptionAPI.middleware ,PharmacyAPI.middleware ,ReportsAPI.middleware ,PaymentAPI.middleware),
+    }).concat(registerAPI.middleware, loginAPI.middleware, appointmentAPI.middleware, PatientsAPI.middleware ,StaffAPI.middleware ,PrescriptionAPI.middleware ,PharmacyAPI.middleware ,ReportsAPI.middleware ,PaymentAPI.middleware,
+      ReceiptAPI.middleware
+    ),
 });
 
 export const persistor = persistStore(store);
