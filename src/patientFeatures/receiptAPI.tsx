@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-// Optionally, define a TypeScript interface for your receipt data
+// Define a TypeScript interface for your receipt data
 export interface Receipt {
   hospitalName: string;
   hospitalAddress: string;
@@ -27,14 +27,15 @@ export const ReceiptAPI = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getReceipt: builder.query<Receipt, number>({
-      query: (paymentId: number) => `receipt/${paymentId}`,
+    
+    getReceipts: builder.query<Receipt[], void>({
+      query: () => 'receipts',
     }),
   }),
 });
 
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const { useGetReceiptQuery } = ReceiptAPI;
+export const { useGetReceiptsQuery } = ReceiptAPI;
 
 export default ReceiptAPI;
