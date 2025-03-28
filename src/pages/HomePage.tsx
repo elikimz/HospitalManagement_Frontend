@@ -96,7 +96,7 @@ const Home = () => {
             {/* Pharmacy */}
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
               <img
-                src="https://via.placeholder.com/400"
+                src="https://www.businessdailyafrica.com/resource/image/4942180/landscape_ratio3x2/1620/1080/8c3a0367c014374d8179342e1b4624d2/Ja/goodlife.jpg"
                 alt="Pharmacy"
                 className="w-full h-52 object-cover"
               />
@@ -111,7 +111,7 @@ const Home = () => {
             {/* Emergency Services */}
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
               <img
-                src="https://via.placeholder.com/400"
+                src="https://media.edinburgh.org/wp-content/uploads/2023/06/23155619/ian-taylor-4hWvAJP8ofM-unsplash-1620x1080.jpg"
                 alt="Emergency"
                 className="w-full h-52 object-cover"
               />
