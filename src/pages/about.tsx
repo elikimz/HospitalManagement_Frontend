@@ -90,7 +90,7 @@ const About = () => {
                 alt="Surgeon"
               />
               <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-200 mt-4">
-                Dr. John Doe
+                Dr. John 
               </h3>
               <p className="text-gray-600 dark:text-gray-400">Head of Surgery</p>
               <p className="mt-4 text-gray-500 dark:text-gray-300">
