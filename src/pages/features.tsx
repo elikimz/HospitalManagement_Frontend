@@ -72,7 +72,7 @@ const Features = () => {
                 Billing & Payments
               </h3>
               <p className="text-gray-600 dark:text-gray-400 mt-2">
-                Secure billing system with insurance claims & M-Pesa payments.
+                Secure billing system.
               </p>
             </div>
 
