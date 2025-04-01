@@ -195,7 +195,7 @@ const PrescriptionManagement = () => {
           </select>
           <input
             type="text"
-            placeholder="Dosage"
+            placeholder="prescription & Dosage "
             value={formData.dosage}
             onChange={(e) => setFormData({ ...formData, dosage: e.target.value })}
             className="border p-2 rounded bg-gray-100"
