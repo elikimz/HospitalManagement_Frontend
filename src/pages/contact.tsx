@@ -15,6 +15,7 @@ const Contact = () => {
     email: "",
     message: "",
   });
+  const [successMessage, setSuccessMessage] = useState<string>("");
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -24,7 +25,9 @@ const Contact = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted", formData);
+    setSuccessMessage("Message sent successfully!");
+    setFormData({ name: "", email: "", message: "" });
+    setTimeout(() => setSuccessMessage(""), 3000); // Hide after 3 seconds
   };
 
   return (
@@ -54,6 +57,17 @@ const Contact = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-10 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8"
           >
+            {successMessage && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                className="mb-4 p-3 text-green-700 bg-green-100 rounded-lg text-center"
+              >
+                {successMessage}
+              </motion.div>
+            )}
+
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label className="block text-gray-700 dark:text-gray-300 font-medium">
