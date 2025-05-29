@@ -58,7 +58,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const PrescriptionAPI = createApi({
   reducerPath: 'prescriptionAPI',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://hospital-api-1-pqd3.onrender.com/',
+    baseUrl: 'https://hospitalapi-aafufvbddvfpfzaq.southafricanorth-01.azurewebsites.net/',
     prepareHeaders: (headers) => {
       const token = localStorage.getItem('token');
       console.log('API Token:', token);

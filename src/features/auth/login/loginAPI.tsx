@@ -117,7 +117,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const loginAPI = createApi({
   reducerPath: "loginAPI",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://hospital-api-1-pqd3.onrender.com/" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://hospital-api-1-pqd3.onrender.com/",
+  }),
   endpoints: (builder) => ({
     loginUser: builder.mutation({
       query: (credentials) => ({
@@ -149,7 +151,7 @@ export const loginAPI = createApi({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ old_password, new_password }),
       }),
@@ -160,7 +162,7 @@ export const loginAPI = createApi({
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       }),
     }),
@@ -170,7 +172,7 @@ export const loginAPI = createApi({
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       }),
     }),
@@ -180,7 +182,7 @@ export const loginAPI = createApi({
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(patientUpdate),
       }),

@@ -17,7 +17,7 @@ export interface Receipt {
 export const ReceiptAPI = createApi({
   reducerPath: 'receiptAPI',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://hospital-api-1-pqd3.onrender.com/',
+    baseUrl: 'https://hospitalapi-aafufvbddvfpfzaq.southafricanorth-01.azurewebsites.net/',
     prepareHeaders: (headers) => {
       const token = localStorage.getItem('token');
       if (token) {
